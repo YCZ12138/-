@@ -1,0 +1,34 @@
+<!--
+ * @Description: 存储
+ * @Author: rendc
+ * @Date: 2022-06-25 11:41:47
+ * @LastEditors: rendc
+ * @LastEditTime: 2022-06-25 11:52:14
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>存储</title>
+</head>
+
+<body>
+  存储
+</body>
+<script>
+  sessionStorage.setItem('name', 'session')
+  sessionStorage.newName = 'new-session'
+  console.log(sessionStorage.getItem('newName'));
+  console.log(sessionStorage.newName);
+  sessionStorage.removeItem('newName')
+  delete sessionStorage.name
+
+
+  localStorage.setItem('name', 'local')
+  console.log(localStorage.getItem('name'));
+</script>
+
+</html>

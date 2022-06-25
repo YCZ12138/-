@@ -67,6 +67,7 @@ ECMAScript
         number
         string
         symbol
+
         object
     保留字、关键字
       break do if else case typeof
@@ -118,24 +119,26 @@ ECMAScript
         容易调试：出现问题之后能够很容易的定位到问题
       编码规范：
         1. 可读性
-          1. 同一个项目中 缩进要保持统一
+          1. 同一个项目中 缩进要保持统一（如果是团队协作的项目那也要注意）
           2. 需要出现代码注释的地方：
-            1. 每个函数和方法，都应该有注释，用来描述他完成的任务，以及他所用的算法
+            1. 每个函数和方法 ，都应该有注释，用来描述他完成的任务，以及他所用的算法
             同时也要写清楚每个函数的参数的含义 方法使用的前提 以及返回值是什么（是否有返回值）
             2. 大型代码块 多行代码 但是是完成单个任务的 应该给出注释 把完成的任务写清楚
             3. 复杂的算法 要通过注释解释明白，方便别人看懂，方便自己维护的时候看懂
             4. 处理浏览器兼容性问题 safari 、 chrome 要加注释说明这是解决的哪个浏览器的什么问题，避免被别人误以为代码没有用而给删除掉，导致兼容性问题再次出现
         2. 命名规范（变量和函数）
-            变量名一般要使用名词 person cat name
+            变量名一般要使用名词 person cat name  不建议使用 a b c 这类型的
             函数名一般要以动词开头 getPersonName() getCatName()，如果返回值是boolean类型的函数可以用is开头 isEnabled()
             对于变量和函数的命名优先考虑可读性 而不是长度
             变量和函数的命名一般以小写字母开头，使用驼峰命名法
             类名首字母要大写 Person Car
             常量全部字母大写 然后用下划线分割 URL REQUEST_TIMEOUT
-            要避免没有实际意义的命名，比如：doSomeThing() 
+            要避免没有实际意义的命名，比如：doSomeThing() 比如 a b c 
         3. 变量类型透明化
             方法1 通过注释添加类型
-              let name = "张三"; // 字符串
+              let name = "张三"; // 字符串 描述一个人的名字
+              ...
+              name
             方法2 匈牙利表示法
               let sName = "张三"
               let bFlag = true
@@ -143,9 +146,9 @@ ECMAScript
               let oPerson = {}
         4. 降低耦合度
           代码耦合度太高会导致代码难以维护，要尽量降低耦合度
-          1. 解耦HTML和JavaScript   
+          1. 解耦HTML和JavaScript
             使用script标签引入外部js文件 而不是直接在script标签内写js代码
-          2. 解耦CSS和JavaScript    
+          2. 解耦CSS和JavaScript
             减少dom操作直接设置样式，而改为通过dom操作给元素修改类名去体现对应的样式
           3. 解耦事件处理程序和应用程序逻辑
             比如我要实现 按下回车键 弹出一个小窗口
@@ -168,16 +171,16 @@ ECMAScript
                 log(1)
               }
         5. 尽可能的封装
-          同样的代码出现过两次或以上，就要考虑封装
+          同样的代码出现过两次或以上，就要考虑封装 不要重复造轮子
         6. js中原生方法的运行速度是较快的 尽可能多使用原生方法 比如Math里的方法
-        7. 复杂的if-else语句应该替换为switch语句 switch语句运行较快 将最可能执行到的条件放到switch靠上的部分 执行可能行较小的放到下面
+        7. 复杂的if-else语句应该替换为switch语句 switch语句运行较快 将最可能执行到的条件放到switch靠上的部分 执行可能行较小的放到下面 来提高代码效率
         8. 语句最少化
           1. 多个变量声明
             let a = 1;
             let b = 2;
             let c = 3;
             建议改为
-            let a = 1， b = 2， c = 3;
+            let a = 1, b = 2, c = 3;
           2. 插入迭代值
             let name = item[i];
             i++;
@@ -194,9 +197,88 @@ ECMAScript
               age: 23,
               gender: "男",
             };
+  变量原始值与引用值区别
+    介绍：
+      原始值是最简单的数据 按值访问 
+        undefined，null，boolean，number，string，symbol
+      引用值是由多个值构成的 按引用访问 
+        object
+    属性：
+      原始值不能有属性
+      引用值可以有属性
+    复制：
+      原始值复制到的内容是独立的 互不影响的
+        num2  Number  5
+        num1  Number  5
+      引用值复制 实际上复制的是一个指针，指向储存在堆内存中的对象 所以我们对obj1和obj2的操作 都是操作的同一个对象
+        obj2  Object  指针
+        obj1  Object  指针
+    参数传递
+      在ES中所有函数的参数传递都是按值传递
+      原始值 变量复制 将原始值的变量复制一份 传递到函数中 函数内的操作 不影响原始值本身
+      引用值 也是按值传递
+    类型判断
+      typeof 操作符判断类型 对原始值很有作用 但是对于引用值的用处不大 
+      instanceof 一般来判断引用值 检测任何引用值和Object的构造函数都会返回true 检测原始值 始终返回false
+    变量声明
+      var 
+        var声明变量会被自动添加到最接近的上下文
+        var声明会被拿到函数或者全局作用域的顶部，位于作用域中的所有代码之前，叫做变量声明提升
+      let 
+        let有作用域是块级的
+        let不能重复声明同一个变量
+        let声明前不能使用变量
+      const 
+        常量声明
+        const声明变量时必须要初始化 而且之后不可以修改 
+        注意：
+          原始值的值不可以修改
+          引用值 对象的属性是可以修改的
+  客服端存储
+    cookie
+      cookie 网景
+        最初用于在客户端存储会话信息 要求服务器在响应http请求时，发送Set-CookieHTTP头部包含会话信息
+        Set-Cookie:name=value
+      cookie的限制
+        cookie是与特定的域绑定的
+        浏览器会限制cookie的大小
+          不要超过300个cookie
+          每个cookie不要超过4096字节
+          每个域不超过20个cookie
+          每个域不超过81920字节
+      cookie的构成
+        名称：唯一标识cookie 不区分大小写 必须经过URL编码
+        值： 存在cookie里的字符串值 必须经过URL编码
+        域-domain：cookie有效域
+        路径-path：请求的URL中包含响应的路径 才会发送cookie
+        过期时间-expires：表示何时删除cookie
+        安全标识-secure：设置之后 可以只在https的情况下发送cookie 在http的情况下不发送  Set-Cookie:name=value;domain=.baidu.com; secure
+      在JavaScript中使用cookie
+        document.cookie
+          所有名称和值都经过URL编码 所以要解码 decodeURIComponent()
+        设置cookie 
+          document.cookie = "name=99999999999"
+        子cookie 在一个cookie里储存多个键值对
+          document.cookie = "name=name1=value&name2=value2"
+      注意
+        cookie不要存敏感 重要的信息 不要存卡号、密码、地址等信息 注意加密
+    Web Storage
+      提供了在cookie之外存储会话数据的途径
+      提供跨会话存储大量数据的机制 
+      localStorage 持久化存储 不随着会话 的消失而消失
+      sessionStorage 会话存储技术 会话关闭 session消失 会话恢复 session恢复
+        // 使用方法添加值
+        sessionStorage.setItem('name', 'session')
+        // 使用属性添加值
+        sessionStorage.newName = 'new-session'
+        console.log(sessionStorage.getItem('newName'));
+        console.log(sessionStorage.newName);
+        // 使用方法删除值
+        sessionStorage.removeItem('newName')
+        // 使用delete删除值
+        delete sessionStorage.name
 
 
-    
 2. vue2 、 vue3
 
 3. 项目
