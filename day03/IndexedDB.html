@@ -1,0 +1,97 @@
+<!--
+ * @Description: IndexedDB
+ * @Author: rendc
+ * @Date: 2022-06-27 09:30:08
+ * @LastEditors: rendc
+ * @LastEditTime: 2022-06-27 11:20:59
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IndexedDB</title>
+</head>
+
+<body>
+  IndexedDB学习
+</body>
+<script>
+  let db, request, version = 2;
+  request = indexedDB.open("admin", version);
+  request.onupgradeneeded = (e) => {
+    // onupgradeneeded不会在刷新页面时执行 而是在刷新页面时发现version被升级了才执行
+    db = e.target.result
+    // 创建之前先判断是否有同名store
+    if (!db.objectStoreNames.contains('myStore')) {
+      // 创建objectStore
+      db.createObjectStore('myStore', {
+        keyPath: 'id'
+      })
+    }
+  }
+  request.onerror = (e) => {
+    console.log(`数据库打开失败，错误码：${e.target.error.code}`);
+    console.log(`数据库打开失败，错误名称：${e.target.error.name}`);
+    console.log(`数据库打开失败，错误原因：${e.target.error.message}`);
+  }
+  request.onsuccess = (e) => {
+    console.log(`数据库创建/打开成功`);
+    db = e.target.result; // 获取数据库对象容器
+    console.log('🤡 CC - db', db)
+    // 事务
+    let transaction = db.transaction('myStore', 'readwrite');
+    const store = transaction.objectStore('myStore')
+    const users = [{
+        id: 1,
+        name: "tom"
+      },
+      {
+        id: 2,
+        name: "terry"
+      },
+      {
+        id: 3,
+        name: "larry"
+      }
+    ];
+    for (const user of users) {
+      // request = store.add(user); // 新增数据
+      // request = store.put(user); // 新增数据
+      request.onerror = (e) => {
+        console.error('🤡 CC - onerror - e', e.target.error)
+      };
+      request.onsuccess = (e) => {
+        console.log('🤡 CC - onsuccess - e', e)
+      };
+    }
+    // 更新数据
+    request = store.put({
+      id: 3,
+      name: "newLarry"
+    });
+    // 删除数据
+    // request = store.delete(2);
+    request.onerror = (e) => {
+      console.error('🤡 CC - onerror - e', e.target.error)
+    };
+    request.onsuccess = (e) => {
+      console.log('🤡 CC - onsuccess - e', e)
+    };
+    // 获取数据
+    request = store.get(1);
+    request.onsuccess = (e) => {
+      console.log('查询到的数据是:');
+      console.log(e.target.result);
+    };
+    // 获取多条数据
+    request.onsuccess = (e) => {
+      console.log('查询到的数据是:');
+      console.log(e.target.result);
+    };
+  }
+</script>
+
+</html>

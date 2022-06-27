@@ -234,7 +234,7 @@ ECMAScript
         注意：
           原始值的值不可以修改
           引用值 对象的属性是可以修改的
-  客服端存储
+  客户端存储
     cookie
       cookie 网景
         最初用于在客户端存储会话信息 要求服务器在响应http请求时，发送Set-CookieHTTP头部包含会话信息
@@ -265,7 +265,7 @@ ECMAScript
     Web Storage
       提供了在cookie之外存储会话数据的途径
       提供跨会话存储大量数据的机制 
-      localStorage 持久化存储 不随着会话 的消失而消失
+      localStorage 持久化存储 不随着会话 的消失而消失 5M
       sessionStorage 会话存储技术 会话关闭 session消失 会话恢复 session恢复
         // 使用方法添加值
         sessionStorage.setItem('name', 'session')
@@ -277,6 +277,117 @@ ECMAScript
         sessionStorage.removeItem('newName')
         // 使用delete删除值
         delete sessionStorage.name
+    IndexedDB
+      特点
+        是浏览器中存储结构化数据的一个方案 
+        方便JavaScript对象的存储和获取，也支持查询和搜索
+        异步操作
+        2017年就获得主流浏览器的支持
+      详情
+        IndexedDB是类似于MySQL的数据库 但是他使用的是对象存储 
+        他不是关系型数据库 不支持SQL查询语句
+        键值对存储（ key - value ） 内部采用对象仓库存放数据 每个数据都有一个主键，主键是独一无二的 否则就会抛出错误
+        异步操作 操作时不会锁死浏览器 用户依然可以进行其它操作  这和localStorage形成对比 为了防止在读写大量数据的时候拖慢网页
+        支持事务 意味着在一系列操作中 只要有一步失败 整个事务就会取消 数据库就会回滚到事务发生之前的状态 不存在只改写一部分数据的情况
+        同源限制 每个数据库和创建他的域名对应，每个网页只能访问自身域名下的数据库 不能跨域访问
+        储存空间大 一般情况最少是250M 甚至没有上限
+        支持二进制存储 不仅可以存储字符串 还可以存储二进制数据
+      使用
+        open() 打开或者创建数据库
+          version 指定数据库版本 类似于软件app的版本 只能为整数由1开始递增
+          let db, request, version = 1;
+          request = indexedDB.open("admin", version);
+          request.onerror = (e) => {
+            console.log(`'数据库打开失败，错误码：'${e.target.errorCode}`);
+          }
+          request.onsuccess = (e) => {
+            console.log('🤡 CC - e', e.target.result)
+          }
+        获取db容器
+          request.onsuccess = (e) => {
+            db = e.target.result; // 获取数据库对象容器
+          }
+          获取到数据库容器后 就可以对数据库进行下一步操作
+          这里是异步操作 所以只能继续在onsuccess里面进行
+        objectStore
+          是数据存储仓库，一个objectStore就类似于mysql中的一张表，存放着数据记录
+            key1 value1
+            key2 value2
+            key3 value3
+            ...   ...
+            key value
+          key
+            通过key 获取value
+            key的两种形态
+              1. inline key被包含在value中
+                key     value
+                1001    {id:1001,name:"tom"}
+              2. outline key不被包含在value中 这种情况下可以开启autoIncrement
+                key     value
+                1       AsdfcphuIPNBOUybOBJHoBO
+          keyPath
+            keyPath的作用就是为了读取key
+            获取一个节点值的属性链式方法的字符串表达
+              {
+                peoples:[
+                  {name:'tom',age:23},
+                  {name:'jarry',age:26}
+                ]
+              }
+            如果要获取第一个人的name那么 keyPath就是 peoples[0].name
+          如何创建 objectStore 
+            db.createObjectStore('myStore', {
+              keyPath: 'id'
+            })
+            一个db中只允许有一个同名的objectStore，所以当我们第二次创建的时候就会报错
+            objectStore创建后不可以修改，如果创建时发生了失误，那么要先删除，再重新创建
+          类型  
+            对象型仓库
+              objectStore是用来存对象的 所以要规定keyPath 如果对象不存在对应的keyPath就会报错
+              {
+                id:1001,// key
+                name:"str"
+              }
+              db.createObjectStore('myStore',{keyPath:'id'})
+            非对象型仓库
+              objectStore不是用来存对象的 那么创建的时候就要传 autoIncrement 而不传keyPath
+              db.createObjectStore('myStore',{autoIncrement:true})
+            混合型仓库
+              db.createObjectStore('myStore',{keyPath:'id',autoIncrement:true})
+        version
+          如果需要新增objectStore就要修改version 一个数据只能有有个version 升级了新的之后就不能使用旧的
+          version必须为正整数
+        事务
+          任何时候想要读取或者修改数据都要通过事务进行
+          创建
+            如果不指定参数，那么创建的事务对于数据库中的对象存储有只读权限
+            let transaction = db.transaction();
+            一般情况会指定参数，确保在事务期间只加载指定的对象
+            let transaction = db.transaction('myStore');
+            如果想访问多个对象 可以传递数组
+            let transaction = db.transaction(['myStore','myStore2']);
+            还可以加第二个参数，修改访问方式 readonly readwrite
+            let transaction = db.transaction('myStore',"readwrite");
+        添加数据
+          add() 新增
+          request = store.add(user);
+          put() 更新
+          如果在操作时对象中已经存在同名的键时 那么add就会报错 而put不会
+        更新数据
+          put()
+        删除数据
+          delete(主键)
+          request = store.delete(2);
+        获取数据
+          get()
+            request = store.get(1);
+            request.onsuccess = (e) => {
+              console.log('查询到的数据是:');
+              console.log(e.target.result);
+            };
+        获取多条数据
+          在事务中创建一个游标 参考代码文件
+        
 
 
 2. vue2 、 vue3

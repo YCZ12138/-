@@ -1,0 +1,85 @@
+<!--
+ * @Description: 获取多条数据
+ * @Author: rendc
+ * @Date: 2022-06-27 11:21:02
+ * @LastEditors: rendc
+ * @LastEditTime: 2022-06-27 11:33:11
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IndexedDB</title>
+</head>
+
+<body>
+  IndexedDB学习
+</body>
+<script>
+  let db, request, version = 2;
+  request = indexedDB.open("admin", version);
+  request.onupgradeneeded = (e) => {
+    // onupgradeneeded不会在刷新页面时执行 而是在刷新页面时发现version被升级了才执行
+    db = e.target.result
+    // 创建之前先判断是否有同名store
+    if (!db.objectStoreNames.contains('myStore')) {
+      // 创建objectStore
+      db.createObjectStore('myStore', {
+        keyPath: 'id'
+      })
+    }
+  }
+  request.onerror = (e) => {
+    console.log(`数据库打开失败，错误码：${e.target.error.code}`);
+    console.log(`数据库打开失败，错误名称：${e.target.error.name}`);
+    console.log(`数据库打开失败，错误原因：${e.target.error.message}`);
+  }
+  request.onsuccess = (e) => {
+    console.log(`数据库创建/打开成功`);
+    db = e.target.result; // 获取数据库对象容器
+    // 事务
+    let transaction = db.transaction('myStore', 'readwrite');
+    const store = transaction.objectStore('myStore')
+    const users = [{
+        id: 1,
+        name: "tom"
+      },
+      {
+        id: 2,
+        name: "terry"
+      },
+      {
+        id: 3,
+        name: "larry"
+      }
+    ];
+    for (const user of users) {
+      // request = store.add(user); // 新增数据
+      request = store.put(user); // 新增数据
+      request.onerror = (e) => {
+        console.error('🤡 CC - onerror - e', e.target.error)
+      };
+      request.onsuccess = (e) => {
+        // console.log('🤡 CC - onsuccess - e', e)
+      };
+    }
+    // 获取多条数据
+    // 创建游标
+    request = store.openCursor();
+    request.onsuccess = (e) => {
+      const cursor = e.target.result;
+      if (cursor) {
+        console.log(`键：${cursor.key},值：${JSON.stringify(cursor.value)},`);
+        // 移动到下一条记录
+        cursor.continue();
+      } else {
+        console.log(`数据展示完毕`);
+      }
+    };
+  }
+</script>
+
+</html>
