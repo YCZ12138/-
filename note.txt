@@ -107,8 +107,147 @@ ECMAScript
       for(){
 
       }
-    函数
     对象
+      常用的创建对象方式
+        1. 创建Object实例
+          let person = new Object();
+          person.name = "tom";
+          person.sayName = function(){
+            console.log(this.name)
+          }
+        2. 字面量
+          let person = {
+            name:tom,
+            sayName(){
+            console.log(this.name);
+            }
+          };
+      内部属性
+        1. 数据属性
+          数据属性包含一个保存数据值的位置，值会从这个位置读取，也会写入到这个位置。数据属性有四个特性描述他的行为。
+            [[Configurable]]:表示属性是否可以通过delete删除并且重新定义，是否可以修改他的特性 默认情况为true
+            [[Enumerable]]:表示是否可以通过for-in循环返回 默认情况为true
+            [[Writable]]:表示属性的值是否可以被修改 默认情况为true
+            [[Value]]:包含属性实际的值
+            在调用Object.defineProperty()时，configurable enumerable writable如果不指定 那么都默认为false
+        2. 访问器属性
+          访问器属性不会包含数值 但是包含两个不必须的函数 getter setter 
+            [[Configurable]]:表示属性是否可以通过delete删除并且重新定义，是否可以修改他的特性 默认情况为true
+            [[Enumerable]]:表示是否可以通过for-in循环返回 默认情况为true
+            [[Get]]:获取函数，在读取属性时调用 默认值undefined
+            [[Set]]:设置函数，在设置属性时调用 默认值undefined
+          Object.defineProperty()
+      合并对象
+        Object.assign() 这个方法接收一个目标对象 和一个或多个源作为参数 然后将每个源中的属性复制到目标对象
+          会修改目标对象 同时返回值也是修改过后的目标对象
+          复制是如果有相同属性 会使用最后一个复制的值
+          如果在复制过程中发生错误，可能只完成部分的复制，也不会回到复制之前的状态
+      对象的相等判定
+        ===
+        Object.is()
+      对象的简写
+      对象的解构
+      创建对象    
+        通过构造函数和字面量创建对象的缺点：如果需要创建具有同样接口的多个对象，要写很多重复的代码
+
+        工厂模式
+          function createPerson (name, age, gender, like) {
+            let o = new Object();
+            o.name = name;
+            o.age = age;
+            o.gender = gender;
+            o.like = like;
+            o.sayName = function () {
+              console.log(this.name);
+            }
+              return o;
+          }
+
+          let p1 = createPerson("p1", 23, "男", [''])
+          let p2 = createPerson("p2", 24, "男", ['🍇'])
+          let p3 = createPerson("p2", 25, "男", ['🍍'])
+          工厂模式创建的对象是Object 不能知道具体的类型
+
+        构造函数模式
+          function Person (name, age, gender, like) {
+            this.name = name;
+            this.age = age;
+            this.gender = gender;
+            this.like = like;
+            this.sayName = function () {
+              console.log(this.name);
+            }
+          }
+          let p4 = new Person("p4", 24, "男", ['🍇'])
+        原型模式
+
+        使用构造函数和原型相结合的方式
+    类
+      class
+      定义
+        类声明
+          class Person {}
+        表达式
+          const Animal = class {}
+          函数的声明可以提升
+          类的声明不可以提升
+          函数受函数作用域限制
+          类受块作用域限制
+        类的构成
+          包含构造函数方法、实例方法、获取函数、设置函数和静态类方法(都不是必须的)
+          空类的定义
+          class Person {}
+          有构造函数的类
+          class Bar {
+            constructor(){}
+          }
+          有获取函数的类
+          class Bar {
+            get myBar(){}
+          }
+          有静态方法的类
+          class Bar {
+            static myBar(){}
+          }
+        类构造函数
+          class Animal { }
+          class Person {
+            constructor(name) {
+              console.log("person");
+              this.name = name || "Null!"
+            }
+          }
+          class Vegetable {
+            constructor() {
+              this.color = "red"
+            }
+          }
+          let a = new Animal();
+          类实例化的时候传入的参数会作为类构造函数的参数
+          let p = new Person();
+          如果不需要参数，类名后面的括号是可以省略的
+          let p1 = new Person;
+          let p2 = new Person("TOM");
+          console.log(p.name);
+          console.log(p1.name);
+          console.log(p2.name);
+          let v = new Vegetable();
+          console.log(v.color);
+        类静态方法
+          class Person {
+            constructor(name) {
+              console.log("person");
+              this.name = name || "Null!"
+            }
+            static sayHello () {
+              console.log("hello");
+            }
+          }
+          Person.sayHello()
+
+
+
+    函数
   代码优化
     自己要写代码，花时间维护自己或者别人写的代码
       可维护的代码特点：
