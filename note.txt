@@ -244,10 +244,135 @@ ECMAScript
             }
           }
           Person.sayHello()
-
-
-
     函数
+      介绍
+        函数表达式、函数声明和箭头函数
+        默认参数及扩展操作符
+        函数也是对象 Function是引用类型 所以函数名是指向函数对象的指针
+      函数的声明和箭头函数
+        所以不带括号的函数名会访问函数的指针
+        // 普通方式
+        function add (num1, num2) {
+          console.log(num1 + num2);
+        }
+        // 函数表达式
+        let add = function(){
+          console.log(num1 + num2);
+        }
+        // 箭头函数（ES6新增的）
+        参数列表的括号()：如果只有一个参数，可以不加括号，如果有多个参数或者没有参数，那么要加括号()
+        函数体的括号{}:也可以不加,但是要注意：使用大括号就意味着包含函数体，可以包含多条语句，如果不用大括号，箭头后面就只能有一行代码，而且，省略大括号会隐式的返回这行代码的值
+          let result = (x) => { return 3 * x; };
+          let result2 = (x) => 3 * x;
+        箭头函数不能使用arguments、super和new.target,也不能用作构造函数，也没有prototype属性
+        let add = (num1,num2) => {
+          console.log(num1 + num2);
+        }
+        let add = () => {
+          console.log();
+        }
+        let add = a => {
+          console.log(a);
+        }
+        // 使用Function构造函数(不建议使用：1.影响性能 2.代码可读性不高)
+        let add = new Function('num1','num2','console.log(num1 + num2)');
+      函数名
+        函数名是指向函数对象的指针
+        name
+          所有函数对象都会暴露一个只读的name属性，包含函数的信息 
+          多数情况 name保存的是函数的标识符 
+          如果函数是匿名函数 返回的是空字符串  
+          、如果是通过new Function构造函数创建的 返回anonymous
+        参数
+          介绍
+            ES不关心参数传入的个数 可以多传、少传甚至不传参数，解释器都不会报错
+            没有重载的概念
+          arguments对象
+            在使用function关键字定义函数（非箭头函数）时，在函数内部就可以访问arguments对象
+            arguments是一个类数组对象
+              console.log(arguments); // 类数组对象
+              console.log(arguments[0]); // 第一个参数
+              console.log(arguments[1]); // 第二个参数
+              console.log(arguments.length);  // 参数的数量 
+            包含调用函数时传入的所有参数
+            属性：  
+              1. length
+                console.log(arguments.length);  // 参数的数量 
+              2. callee 指向arguments对象所在函数的指针
+          默认参数
+            function add (num1, num2 = 10) {
+              console.log(num1 + num2);
+            }
+            arguments只会拿到传给函数的参数 不会拿到默认值 
+            一个函数有多个参数时，具有默认值的要放在后面声明
+            暂时性死区:前面定义的参数不能引用后面定义的
+              // 正常情况
+              function add (num1 = 10, num2 = num1) {
+                console.log(num1 + num2);
+              }
+              add();
+              // 不正常情况
+              function add (num1 = num2, num2 = 11) {
+                console.log(num1 + num2);
+              }
+              add();
+          扩展参数
+            ...
+            let arr = [1, 2, 3, 4];
+            function getSum () {
+              let sum = 0;
+              for (let i = 0; i < arguments.length; i++) {
+                sum += arguments[i];
+              }
+              return sum
+            }
+            console.log(getSum(...arr));
+            console.log(getSum(0, ...arr, 5, ...[6, 7, 8]));
+        声明与表达式
+          函数声明的提升
+          // 不报错
+          console.log(addTest(5, 6));
+          function addTest (num1, num2) {
+            return num1 + num2
+          }
+          // 会报错
+          console.log(addTest2(5, 6));
+          let或var都报错
+          let addTest2 = function (num1, num2) {
+            return num1 + num2
+          }
+        函数作为值
+          function addTest (num1, num2 = 10) {
+            return num1 + num2
+          }
+          function newAddFunction (someFunction, argument) {
+            return someFunction(argument)
+          }
+          let result5 = newAddFunction(addTest, 5)
+          console.log('🤡 CC - result5', result5)
+        this对象
+          在标准函数中 this是指把函数当成方法调用的上下文对象
+            在网页中，this指向window
+          在箭头函数中 this指向定义箭头函数的上下文this
+        caller  这个属性引用的是调用当前函数的函数
+        new.target
+          如果函数是正常调用的，则new.target的值是undefined
+          如果使用new关键字调用的，new.target将引用被调用的构造函数
+        length
+          表示的是函数命名参数的个数
+        prototype
+          保存引用类型所有实例方法的地方
+        call & apply
+          add.apply(this, arguments)
+          add.apply(this, [num1, num2])
+          add.call(this, num1, num2)
+          
+          sayColor.call(this)
+          sayColor.call(window)
+          sayColor.call(obj)
+
+
+
   代码优化
     自己要写代码，花时间维护自己或者别人写的代码
       可维护的代码特点：
