@@ -1,3 +1,10 @@
+<!--
+ * @Description: 
+ * @Author: rendc
+ * @Date: 2022-07-01 09:10:40
+ * @LastEditors: rendc
+ * @LastEditTime: 2022-07-01 09:58:32
+-->
 <template>
   <div class="home">
     <img
@@ -5,6 +12,24 @@
       src="../assets/logo.png"
     >
     <!-- <HelloWorld msg="Welcome to Your Vue.js App" /> -->
+    <NewWorld
+      :data="data"
+      @myAdd="myAddHandle"
+      @myDel="myDelHandle"
+      color="blue"
+    />
+    <NewWorld
+      :data="data"
+      @myAdd="myAddHandle"
+      @myDel="myDelHandle"
+      color="blue"
+    />
+    <NewWorld
+      :data="data"
+      @myAdd="myAddHandle"
+      @myDel="myDelHandle"
+      color="blue"
+    />
     <NewWorld
       :data="data"
       @myAdd="myAddHandle"
@@ -20,6 +45,7 @@
     <br>
     <!-- --{{ data }}-- -->
     <!-- <button @click="sayHello">你好</button> -->
+    最底部
   </div>
 </template>
 

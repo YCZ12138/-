@@ -718,7 +718,49 @@
   按需引入vant组件库
     npm i unplugin-vue-components -D
   修改配置文件 修改后重启项目
-3. 项目
+  组件注册方式
+    常用方式1
+      import { Button, Cell, CellGroup } from "vant";
+
+      export default defineComponent({
+        components: {
+          VanButton: Button,
+          VanCell: Cell,
+          VanCellGroup: CellGroup,
+        },
+        setup() {
+          return {};
+        },
+      });
+    常用方式二
+      <script setup>
+        import { Button, Cell, CellGroup, Icon, Toast } from "vant";
+      <script/>
+  特别提醒  
+    1.Vant 中有个别组件是以函数的形式提供的，包括 Toast，Dialog，Notify 和 ImagePreview 组件。
+      在使用函数组件时，unplugin-vue-components 无法自动引入对应的样式，因此需要手动引入样式。比如
+        // Toast
+        import { Toast } from 'vant';
+        import 'vant/es/toast/style';
+        详情可见官网 https://vant-contrib.gitee.io/vant/#/zh-CN/quickstart#4.-yin-ru-han-shu-zu-jian-de-yang-shi
+    2. 在使用<script setup>中到如组件时要注意 
+        1. 使用组件不要用单标签
+        2. 使用组件标签名不要省略 要用全称 <van-cell-group> 或者 <VanCellGroup>
+        3. 由于导入的是Button 但是使用的是van-button所以eslint会检测、报错 那么我们要让eslint忽略这个问题 // eslint-disable-next-line no-unused-vars
+            <van-cell-group>
+              <van-cell
+                title="单元格"
+                value="内容"
+              ></van-cell>
+              <van-cell
+                title="单元格"
+                value="内容"
+              ></van-cell>
+            </van-cell-group>
+            // eslint-disable-next-line no-unused-vars
+            import { Button, Cell, CellGroup, Icon, Toast } from "vant";
+    3. 移动端响应式适配
+  3. 项目
   移动端项目
 
 

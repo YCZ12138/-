@@ -3,7 +3,7 @@
  * @Author: rendc
  * @Date: 2022-06-30 10:06:28
  * @LastEditors: rendc
- * @LastEditTime: 2022-06-30 12:56:59
+ * @LastEditTime: 2022-07-01 09:32:42
 -->
 <template>
   <div class="hello">
@@ -17,7 +17,17 @@
       type="danger"
       @click="del"
     >删除</Button>
-    <van-cell-group inset>
+    <VanCellGroup inset>
+      <VanCell
+        title="单元格"
+        value="内容"
+      ></VanCell>
+      <VanCell
+        title="单元格"
+        value="内容"
+      ></VanCell>
+    </VanCellGroup>
+    <!-- <van-cell-group>
       <van-cell
         title="单元格"
         value="内容"
@@ -26,10 +36,10 @@
         title="单元格"
         value="内容"
       ></van-cell>
-    </van-cell-group>
+    </van-cell-group> -->
     <Icon name="chat-o" />
     <Icon name="https://fastly.jsdelivr.net/npm/@vant/assets/icon-demo.png" />
-    <Icon
+    <!-- <Icon
       name="chat-o"
       dot
     />
@@ -52,16 +62,14 @@
       name="fire-o"
       color="#ee0a24"
     />
-    <!-- 不指定单位，默认使用 px -->
     <van-icon
       name="chat-o"
       size="40"
     />
-    <!-- 指定使用 rem 单位 -->
     <van-icon
       name="chat-o"
       size="3rem"
-    />
+    /> -->
 
     ---
   </div>
