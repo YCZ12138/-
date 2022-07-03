@@ -3,7 +3,7 @@
  * @Author: rendc
  * @Date: 2022-07-01 09:10:40
  * @LastEditors: rendc
- * @LastEditTime: 2022-07-01 10:36:24
+ * @LastEditTime: 2022-07-03 09:28:26
 -->
 <template>
   <!-- <nav>
@@ -16,8 +16,8 @@
   <router-view /> -->
   <div class="main">
     <Home v-if="active === 'home'" />
-    <About v-if="active === 'search'" />
-    <Orders v-if="active === 'orders'" />
+    <Sort v-if="active === 'search'" />
+    <ShoppingCart v-if="active === 'orders'" />
     <My v-if="active === 'my'" />
   </div>
   <van-tabbar
@@ -48,11 +48,11 @@ import { ref } from "vue";
 // eslint-disable-next-line no-unused-vars
 import { Tabbar, TabbarItem } from "vant";
 import Home from "./views/HomeView.vue";
-import About from "./views/AboutView.vue";
-import Orders from "./views/OrdersView.vue";
+import Sort from "./views/SortView.vue";
+import ShoppingCart from "./views/ShoppingCartView.vue";
 import My from "./views/MyView.vue";
 
-const active = ref("my");
+const active = ref("search");
 const onChange = (name) => {
   console.log("🤡 CC - onChange - name", name);
 };
