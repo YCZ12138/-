@@ -26,6 +26,7 @@
     "eslint-plugin-vue": "^8.0.3",
     "less": "^4.0.0",
     "less-loader": "^8.0.0",
+    "postcss-px-to-viewport": "^1.1.1",
     "unplugin-vue-components": "^0.20.1"
   },
   "eslintConfig": {

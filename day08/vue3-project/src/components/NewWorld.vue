@@ -17,16 +17,6 @@
       type="danger"
       @click="del"
     >删除</Button>
-    <VanCellGroup inset>
-      <VanCell
-        title="单元格"
-        value="内容"
-      ></VanCell>
-      <VanCell
-        title="单元格"
-        value="内容"
-      ></VanCell>
-    </VanCellGroup>
     <!-- <van-cell-group>
       <van-cell
         title="单元格"
@@ -78,7 +68,7 @@
 <script setup>
 import { defineProps, defineEmits, reactive } from "vue";
 // eslint-disable-next-line no-unused-vars
-import { Button, Cell, CellGroup, Icon, Toast } from "vant";
+import { Button, Icon, Toast } from "vant";
 import "vant/es/toast/style";
 
 const props = defineProps({

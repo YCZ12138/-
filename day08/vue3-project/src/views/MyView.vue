@@ -3,7 +3,7 @@
  * @Author: rendc
  * @Date: 2022-07-01 10:10:11
  * @LastEditors: rendc
- * @LastEditTime: 2022-07-01 12:00:36
+ * @LastEditTime: 2022-07-02 11:56:20
 -->
 <template>
   <div class="about">
@@ -14,8 +14,7 @@
       <div class="left">
         <van-image
           round
-          width="60"
-          height="60"
+          class="imgHeader"
           src="https://img.youpin.mi-img.com/shopcenter/7dhur6i77hg_11350267611625208274363.png"
         />
       </div>
@@ -23,22 +22,182 @@
       <div class="right">
         <van-icon
           name="arrow"
-          size="18"
+          class="myIcon20"
+          color="#b3b3b3"
         />
       </div>
-      <!-- <Button type="primary">主要按钮</Button> -->
-      <!-- <van-dialog
-        title="标题"
-        show-cancel-button
-        message="内容内容内容内容内容内容内容内容"
-      ></van-dialog> -->
+    </div>
+    <div class="main">
+      <van-cell-group>
+        <van-cell
+          center
+          is-link
+          @click="openDialog()"
+        >
+          <template #title>
+            <div class="custom_title">我的订单</div>
+          </template>
+        </van-cell>
+      </van-cell-group>
+      <van-row class="myRow">
+        <van-col span="6">
+          <div
+            class="myCard"
+            @click="openDialog()"
+          >
+            <van-icon
+              class="myIcon40"
+              name="
+              https://img.youpin.mi-img.com/shopcenter/1su4kcv21eg_22212270231600948691418.png"
+            ></van-icon>
+            <div class="title">待付款</div>
+          </div>
+        </van-col>
+        <van-col span="6">
+          <div
+            class="myCard"
+            @click="openDialog()"
+          >
+            <van-icon
+              class="myIcon40"
+              name="
+              https://img.youpin.mi-img.com/shopcenter/2rsi345c8a_22212270231600948691450.png"
+            ></van-icon>
+            <div class="title">待收货</div>
+          </div>
+        </van-col>
+        <van-col span="6">
+          <div
+            class="myCard"
+            @click="openDialog()"
+          >
+            <van-icon
+              class="myIcon40"
+              name="
+              https://img.youpin.mi-img.com/shopcenter/n9q7tuhs6ao_22212270231600948691455.png"
+            ></van-icon>
+            <div class="title">评价</div>
+          </div>
+        </van-col>
+        <van-col span="6">
+          <div
+            class="myCard"
+            @click="openDialog()"
+          >
+            <van-icon
+              class="myIcon40"
+              name="
+              https://img.youpin.mi-img.com/shopcenter/q69ib1u9teg_22212270231600948691439.png"
+            ></van-icon>
+            <div class="title">退款/售后</div>
+          </div>
+        </van-col>
+      </van-row>
+      <div class="mySpace"></div>
+      <van-cell-group>
+        <van-cell
+          center
+          is-link
+          @click="openDialog()"
+        >
+          <template #title>
+            <van-icon
+              class="myIcon myIcon38"
+              name="//cdn.cnbj1.fds.api.mi-img.com/mijia-m/production/yrn-buz-shop-center/res/images/ucenter/ucenter_icon_myassets.png"
+            />
+            <div class="custom_title">我的资产</div>
+          </template>
+        </van-cell>
+        <van-cell
+          center
+          is-link
+          @click="openDialog()"
+        >
+          <template #title>
+            <van-icon
+              class="myIcon myIcon38"
+              name="//cdn.cnbj1.fds.api.mi-img.com/mijia-m/production/yrn-buz-shop-center/res/images/ucenter/ucenter_icon_coupon_new.png"
+            />
+            <div class="custom_title">优惠券</div>
+          </template>
+        </van-cell>
+        <van-cell
+          center
+          is-link
+          @click="openDialog()"
+        >
+          <template #title>
+            <van-icon
+              class="myIcon myIcon38"
+              name="//cdn.cnbj1.fds.api.mi-img.com/mijia-m/production/yrn-buz-shop-center/res/images/ucenter/ucenter_icon_collection.png"
+            />
+            <div class="custom_title">我的收藏</div>
+          </template>
+        </van-cell>
+      </van-cell-group>
+      <div class="mySpace"></div>
+      <van-cell-group>
+        <van-cell
+          center
+          is-link
+          @click="openDialog()"
+        >
+          <template #title>
+            <van-icon
+              class="myIcon myIcon38"
+              name="//cdn.cnbj1.fds.api.mi-img.com/mijia-m/production/yrn-buz-shop-center/res/images/ucenter/ucenter_icon_address.png"
+            />
+            <div class="custom_title">地址管理</div>
+          </template>
+        </van-cell>
+        <van-cell
+          center
+          is-link
+          @click="openDialog()"
+        >
+          <template #title>
+            <van-icon
+              class="myIcon myIcon38"
+              name="https://shop.io.mi-img.com/app/shop/img?id=shop_0556651f21ebb90fd2094de25cfeeeff.png&w=114&h=114"
+            />
+            <div class="custom_title">资质证照</div>
+          </template>
+        </van-cell>
+        <van-cell
+          center
+          is-link
+          @click="openDialog()"
+        >
+          <template #title>
+            <van-icon
+              class="myIcon myIcon38"
+              name="https://shop.io.mi-img.com/app/shop/img?id=shop_eec55569c325c1641e1cd47ba572b83b.png&w=114&h=114"
+            />
+            <div class="custom_title">协议规则</div>
+          </template>
+        </van-cell>
+        <van-cell
+          center
+          is-link
+          @click="openDialog()"
+        >
+          <template #title>
+            <van-icon
+              class="myIcon myIcon38"
+              name="//cdn.cnbj1.fds.api.mi-img.com/mijia-m/production/yrn-buz-shop-center/res/images/ucenter/ucenter_icon_feedback.png"
+            />
+            <div class="
+              custom_title">帮助与反馈
+            </div>
+          </template>
+        </van-cell>
+      </van-cell-group>
     </div>
   </div>
-
 </template>
 <script setup>
 // eslint-disable-next-line no-unused-vars
-import { Image, Dialog, Button } from "vant";
+import { Image, Dialog, Button, Cell, CellGroup, Col, Row } from "vant";
 import "vant/es/dialog/style";
 const openDialog = () => {
   Dialog.confirm({
@@ -93,7 +252,18 @@ const openDialog = () => {
 };
 </script>
 <style lang="less" scoped>
+.about {
+  background-color: #f3f3f3;
+  // 自定义的空间分割div
+  .mySpace {
+    width: 100%;
+    height: 5px;
+  }
+}
 .header {
+  .imgHeader {
+    width: 60px;
+  }
   height: 100px;
   background-color: #7f6044;
   .left {
@@ -115,6 +285,38 @@ const openDialog = () => {
     padding-right: 25px;
   }
 }
+.main {
+  .myRow {
+    background-color: #ffffff;
+  }
+  .myCard {
+    margin: 10px;
+    line-height: 12px;
+    .title {
+      color: rgba(0, 0, 0, 0.6);
+      font-size: 13px;
+    }
+  }
+  .myIcon {
+    float: left;
+  }
+  .myIcon20 {
+    font-size: 20px;
+  }
+  .myIcon38 {
+    font-size: 38px;
+  }
+  .myIcon40 {
+    font-size: 40px;
+  }
+  .custom_title {
+    line-height: 38px;
+    text-align: left;
+    color: rgb(51, 51, 51);
+    font-size: 14px;
+    font-weight: 400;
+  }
+}
 // :deep(.van-button) {
 //   --van-button-primary-background-color: red;
 // }
@@ -123,6 +325,7 @@ const openDialog = () => {
 <style lang="less">
 .jsxDiv {
   font-size: 13px;
+  line-height: 23px;
   color: #999999;
   .title {
     color: rgb(51, 51, 51);
@@ -135,5 +338,9 @@ const openDialog = () => {
 .lib10-secret-dialog-url {
   color: rgb(159, 128, 82);
   text-decoration: none;
+}
+:root {
+  --van-dialog-border-radius: 8px;
+  --van-cell-vertical-padding: 5px;
 }
 </style>

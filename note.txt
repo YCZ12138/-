@@ -760,6 +760,32 @@
             // eslint-disable-next-line no-unused-vars
             import { Button, Cell, CellGroup, Icon, Toast } from "vant";
     3. 移动端响应式适配
+      1. 选择插件
+      npm install postcss-px-to-viewport --save-dev
+      2. 修改配置文件
+      3. 重启项目 修改组件bug
+      
+    4. 处理vant自定义样式的几种方式
+      1. 
+        <style lang="less">
+          :root {
+            --van-dialog-border-radius: 8px;
+          }
+        </style>
+      2. 
+        <style lang="less" scoped>
+          :deep(.van-button) {
+            --van-button-primary-background-color: red;
+          }
+        </style>
+      3. 通过 ConfigProvider 覆盖
+      4. 通过jsx代码块 自定义组件
+      5. 自定义图标的处理
+        1. 下载图标 放大
+        2. 使用自定义图标库
+        3. 插槽
+
+
   3. 项目
   移动端项目
 

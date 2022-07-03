@@ -3,7 +3,7 @@
  * @Author: rendc
  * @Date: 2022-07-01 09:10:40
  * @LastEditors: rendc
- * @LastEditTime: 2022-07-01 09:58:32
+ * @LastEditTime: 2022-07-02 09:36:12
 -->
 <template>
   <div class="home">
@@ -11,25 +11,7 @@
       alt="Vue logo"
       src="../assets/logo.png"
     >
-    <!-- <HelloWorld msg="Welcome to Your Vue.js App" /> -->
-    <NewWorld
-      :data="data"
-      @myAdd="myAddHandle"
-      @myDel="myDelHandle"
-      color="blue"
-    />
-    <NewWorld
-      :data="data"
-      @myAdd="myAddHandle"
-      @myDel="myDelHandle"
-      color="blue"
-    />
-    <NewWorld
-      :data="data"
-      @myAdd="myAddHandle"
-      @myDel="myDelHandle"
-      color="blue"
-    />
+    <HelloWorld msg="Welcome to Your Vue.js App" />
     <NewWorld
       :data="data"
       @myAdd="myAddHandle"
@@ -75,7 +57,7 @@
 <script setup>
 // vue 3.2
 import { ref } from "vue";
-// import HelloWorld from "@/components/HelloWorld.vue";
+import HelloWorld from "@/components/HelloWorld.vue";
 import NewWorld from "@/components/NewWorld.vue";
 // const str = ref("hello");
 const data = ref();
