@@ -3,7 +3,7 @@
  * @Author: rendc
  * @Date: 2022-07-01 09:10:40
  * @LastEditors: rendc
- * @LastEditTime: 2022-07-03 12:04:57
+ * @LastEditTime: 2022-07-04 10:28:47
 -->
 <template>
   <div class="about">
@@ -25,18 +25,11 @@
           v-model="active"
           @change="onChange"
         >
-          <van-sidebar-item title="有品推荐" />
-          <van-sidebar-item title="手机数码" />
-          <van-sidebar-item title="小米电视" />
-          <van-sidebar-item title="影音娱乐" />
-          <van-sidebar-item title="智能家庭" />
-          <van-sidebar-item title="大家电" />
-          <van-sidebar-item title="厨卫电器" />
-          <van-sidebar-item title="生活家电" />
-          <van-sidebar-item title="个护电器" />
-          <van-sidebar-item title="美食酒饮" />
-          <van-sidebar-item title="家具家装" />
-          <van-sidebar-item title="电脑办公" />
+          <van-sidebar-item
+            v-for="(item,index) in mySidebarData"
+            :key="index"
+            :title="item"
+          />
         </van-sidebar>
       </div>
       <div class="right">
@@ -68,6 +61,7 @@
             <van-grid-item
               v-for="(item,index) in item.items"
               :key="index"
+              @click="toTypePage(index)"
             >
               <van-image
                 class="img"
@@ -83,14 +77,30 @@
 </template>
 <script setup>
 import { ref } from "vue";
+import { useRouter } from "vue-router";
 // eslint-disable-next-line no-unused-vars
 import { NavBar, Sidebar, SidebarItem, Toast, Grid, GridItem } from "vant";
 import "vant/es/toast/style";
+
+const router = useRouter();
 const toSearchPage = () => {
   console.log("🤡 CC - toSearchPage - toSearchPage", "toSearchPage");
 };
 const active = ref(0);
-
+const mySidebarData = [
+  "有品推荐",
+  "手机数码",
+  "小米电视",
+  "影音娱乐",
+  "智能家庭",
+  "大家电",
+  "厨卫电器",
+  "生活家电",
+  "个护电器",
+  "美食酒饮",
+  "家具家装",
+  "电脑办公",
+];
 // eslint-disable-next-line no-unused-vars
 const myGridData0 = [
   {
@@ -162,25 +172,23 @@ const myGridData1 = [
   },
 ];
 let myGridData = ref(myGridData0);
+let typePageTitle = ref(mySidebarData[0]);
 const onChange = (index) => {
   // 实际情况是会向后台查询数据
-  // Toast(`标签名 ${index + 1}`);
+  // Toast(`标签名 ${mySidebarData[index]}`);
+  typePageTitle.value = mySidebarData[index];
   try {
     myGridData.value = eval("myGridData" + index);
   } catch (error) {
     myGridData.value = [];
   }
 };
+const toTypePage = (index) => {
+  console.log("🤡 CC - toTypePage - index", index);
+  router.push({ name: "type", params: { title: typePageTitle.value } });
+};
 </script>
 <style lang="less" scoped>
-.myNavBar {
-  width: 100%;
-  position: fixed;
-  .myNavBarIcon {
-    font-size: 18px;
-    color: #333333;
-  }
-}
 .sortMain {
   display: flex;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica,
@@ -238,9 +246,19 @@ const onChange = (index) => {
 }
 </style>
 <style lang="less">
+.myNavBar {
+  --van-nav-bar-icon-color: #333333;
+  --van-nav-bar-arrow-size: 18px;
+  width: 100%;
+  position: fixed;
+  .myNavBarIcon {
+    font-size: 18px;
+    color: #333333;
+  }
+}
 :root {
   --van-sidebar-width: 93px;
-  --van-sidebar-font-size: 16px;
+  --van-sidebar-font-size: 14px;
   --van-sidebar-text-color: #777777;
   --van-sidebar-background-color: #ffffff;
   --van-sidebar-selected-text-color: #ffffff;
@@ -249,8 +267,9 @@ const onChange = (index) => {
   --van-grid-item-content-padding: 10px 5px;
   .van-sidebar-item--select {
     .van-sidebar-item__text {
-      padding-left: 8px;
-      width: 81px;
+      padding-left: 4px;
+      padding-right: 4px;
+      width: 64px;
       height: 26.5px;
       line-height: 26.5px;
       border-radius: 13px;
