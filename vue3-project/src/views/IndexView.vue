@@ -3,7 +3,7 @@
  * @Author: rendc
  * @Date: 2022-07-04 09:53:05
  * @LastEditors: rendc
- * @LastEditTime: 2022-07-04 09:55:12
+ * @LastEditTime: 2022-07-05 11:00:47
 -->
 <template>
   <div class="main">
@@ -46,7 +46,7 @@ import ShoppingCart from "./ShoppingCartView.vue";
 import My from "./MyView.vue";
 // import Type from "./TypeView.vue";
 
-const active = ref("search");
+const active = ref("home");
 const onChange = (name) => {
   console.log("🤡 CC - onChange - name", name);
 };

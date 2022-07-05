@@ -3,7 +3,7 @@
  * @Author: rendc
  * @Date: 2022-07-01 09:10:40
  * @LastEditors: rendc
- * @LastEditTime: 2022-07-04 10:28:47
+ * @LastEditTime: 2022-07-05 09:38:23
 -->
 <template>
   <div class="about">
@@ -185,7 +185,11 @@ const onChange = (index) => {
 };
 const toTypePage = (index) => {
   console.log("🤡 CC - toTypePage - index", index);
-  router.push({ name: "type", params: { title: typePageTitle.value } });
+  sessionStorage.setItem(
+    "typePage",
+    JSON.stringify({ title: typePageTitle.value })
+  );
+  router.push({ name: "type" });
 };
 </script>
 <style lang="less" scoped>

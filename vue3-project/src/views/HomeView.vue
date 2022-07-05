@@ -3,74 +3,91 @@
  * @Author: rendc
  * @Date: 2022-07-01 09:10:40
  * @LastEditors: rendc
- * @LastEditTime: 2022-07-04 09:35:25
+ * @LastEditTime: 2022-07-05 11:18:13
 -->
 <template>
   <div class="home">
-    <img
-      alt="Vue logo"
-      src="../assets/logo.png"
+    <!-- :navigation="true" -->
+    <swiper
+      class="mySwiper"
+      :slides-per-view="1"
+      :space-between="50"
+      :loop="true"
+      :pagination="{
+        clickable:false
+      }"
+      :autoplay="{
+        delay:2000,
+        disableOnInteraction:false
+      }"
+      :modules="modules"
     >
-    <HelloWorld msg="Welcome to Your Vue.js App" />
-    <NewWorld
-      :data="data"
-      @myAdd="myAddHandle"
-      @myDel="myDelHandle"
-      color="blue"
-    />
-    <!-- <new-world
-      :data="data"
-      color="red"
-    /> -->
-    <!-- <new-world :data="data" /> -->
-    <!-- --{{ str }}-- -->
-    <br>
-    <!-- --{{ data }}-- -->
-    <!-- <button @click="sayHello">你好</button> -->
-    最底部
+      <swiper-slide>
+        <img
+          src="https://res.youpin.mi-img.com/youpinoper/42a569a0_ced6_4bcf_8833_a50a49fbf666.jpeg@base@tag=imgScale&h=320&w=750"
+          alt=""
+        >
+      </swiper-slide>
+      <swiper-slide>
+        <img
+          src="https://res.youpin.mi-img.com/youpinoper/8f6eabc4_ff0c_4c44_b3c6_20edd700ace5.jpeg@base@tag=imgScale&h=320&w=750"
+          alt=""
+        >
+      </swiper-slide>
+      <swiper-slide>
+        <img
+          src="https://res.youpin.mi-img.com/youpinoper/004547c4_6733_4030_9857_60906e7e9f06.jpeg@base@tag=imgScale&h=320&w=750"
+          alt=""
+        >
+      </swiper-slide>
+      <swiper-slide>
+        <img
+          src="https://res.youpin.mi-img.com/youpinoper/8b6d166c_bbaa_47f6_b7a3_ec900a7f37f9.jpeg@base@tag=imgScale&h=320&w=750"
+          alt=""
+        >
+      </swiper-slide>
+    </swiper>
   </div>
 </template>
 
-<script>
-// vue2
-// import HelloWorld from "@/components/HelloWorld.vue";
-// import NewWorld from "@/components/NewWorld.vue";
-
-// export default {
-//   name: "HomeView",
-//   components: {
-//     HelloWorld,
-//     NewWorld,
-//   },
-//   setup() {
-//     const str = ref("hello");
-//     return {
-//       str,
-//     };
-//   },
-// };
-</script>
-
-
-
 
 <script setup>
-// vue 3.2
-import { ref } from "vue";
-import HelloWorld from "@/components/HelloWorld.vue";
-import NewWorld from "@/components/NewWorld.vue";
-// const str = ref("hello");
-const data = ref();
-data.value = [1, 2, 3, 4, 5];
-// const sayHello = () => {
-//   console.log("hello");
-// };
+// Import Swiper Vue.js components
+import { Swiper, SwiperSlide } from "swiper/vue";
+// 除了Swiper, SwiperSlide基础组件 其他的功能需要单独导入
+// eslint-disable-next-line no-unused-vars
+import { Autoplay, Navigation, Pagination, Scrollbar, A11y } from "swiper";
+// Import Swiper styles
+import "swiper/css";
+import "swiper/css/autoplay";
+import "swiper/css/navigation";
+import "swiper/css/pagination";
+import "swiper/css/scrollbar";
 
-// const myAddHandle = (p) => {
-//   console.log("父组件的add", p);
-// };
-// const myDelHandle = (p) => {
-//   console.log("父组件的del", p);
-// };
-// sayHello();
+// 使用setup语法 需要创建这样一个变量和组对应 否则就无法使用对用的功能
+const modules = [Autoplay, Navigation, Pagination, Scrollbar, A11y];
 </script>
+
+sty
+<style lang="less" scoped>
+.mySwiper {
+  img {
+    width: 375px;
+  }
+  :deep(.swiper-pagination) {
+    text-align: right;
+    left: -16px;
+    bottom: 22px;
+  }
+  :deep(.swiper-pagination-bullet) {
+    width: 12px;
+    height: 3px;
+    background-color: white;
+    border-radius: 0;
+    opacity: 1;
+  }
+  :deep(.swiper-pagination-bullet-active) {
+    height: 12px;
+  }
+}
+</style>

@@ -3,7 +3,7 @@
  * @Author: rendc
  * @Date: 2022-07-04 09:35:40
  * @LastEditors: rendc
- * @LastEditTime: 2022-07-04 11:45:19
+ * @LastEditTime: 2022-07-05 09:40:28
 -->
 <template>
   <div class="type">
@@ -79,14 +79,15 @@
 </template>
 <script setup>
 // import { ref } from "vue";
-import { useRoute, useRouter } from "vue-router";
+import { useRouter } from "vue-router";
 // eslint-disable-next-line no-unused-vars
 import { NavBar, Card } from "vant";
 import "vant/es/toast/style";
 
-const route = useRoute();
 const router = useRouter();
-const { title } = route.params;
+const { title = "产品列表" } =
+  JSON.parse(sessionStorage.getItem("typePage")) || {};
+
 const toSearchPage = () => {
   console.log("🤡 CC - toSearchPage - toSearchPage", "toSearchPage");
 };
@@ -118,9 +119,13 @@ const myCardData = [
   },
 ];
 const toShoppingPage = (item) => {
+  sessionStorage.setItem(
+    "shoppingPage",
+    JSON.stringify({ id: item.id, name: item.title[1] })
+  );
   router.push({
     name: "shopping",
-    params: { id: item.id, name: item.title[1] },
+    // params: { id: item.id, name: item.title[1] },
     // 一般要同步存到session中
   });
   // history.go(-1);
