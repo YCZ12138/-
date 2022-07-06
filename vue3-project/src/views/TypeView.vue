@@ -3,7 +3,7 @@
  * @Author: rendc
  * @Date: 2022-07-04 09:35:40
  * @LastEditors: rendc
- * @LastEditTime: 2022-07-05 09:40:28
+ * @LastEditTime: 2022-07-06 12:01:08
 -->
 <template>
   <div class="type">
@@ -134,11 +134,6 @@ const toShoppingPage = (item) => {
 </script>
 
 <style lang="less" scoped>
-// 自定义的空间分割div
-.mySpace46 {
-  width: 100%;
-  height: 46px;
-}
 .myCard {
   text-align: left;
   --van-card-background-color: #ffffff;

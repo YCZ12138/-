@@ -784,8 +784,11 @@
         1. 下载图标 放大
         2. 使用自定义图标库
         3. 插槽
-
-
+    5. 轮播图插件
+      "swiper": "^8.2.6",
+        https://swiperjs.com/swiper-api
+        https://swiperjs.com/vue
+    6. 点击返回按钮后 不在原来的页面了 怎么处理？
   3. 项目
   移动端项目
 

@@ -3,7 +3,7 @@
  * @Author: rendc
  * @Date: 2022-07-04 09:53:05
  * @LastEditors: rendc
- * @LastEditTime: 2022-07-05 11:00:47
+ * @LastEditTime: 2022-07-06 09:13:37
 -->
 <template>
   <div class="main">
@@ -28,6 +28,8 @@
     <van-tabbar-item
       name="orders"
       icon="shopping-cart-o"
+      replace
+      to="/shoppingCart"
     >购物车</van-tabbar-item>
     <van-tabbar-item
       name="my"

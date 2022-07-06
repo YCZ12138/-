@@ -3,7 +3,7 @@
  * @Author: rendc
  * @Date: 2022-07-04 11:36:09
  * @LastEditors: rendc
- * @LastEditTime: 2022-07-05 10:22:26
+ * @LastEditTime: 2022-07-06 09:16:07
 -->
 
 <template>
@@ -12,7 +12,7 @@
       class="myNavBar"
       :title="name"
       left-arrow
-      @click-left="toHome()"
+      @click-left="goBack()"
     >
       <template #right>
         <van-icon
@@ -143,7 +143,7 @@ const toSearchPage = () => {
   console.log("🤡 CC - id", id);
   console.log("🤡 CC - toSearchPage - toSearchPage", "toSearchPage");
 };
-const toHome = () => {
+const goBack = () => {
   history.go(-1);
   // history.back();
 };

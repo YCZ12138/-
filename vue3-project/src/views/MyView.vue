@@ -3,7 +3,7 @@
  * @Author: rendc
  * @Date: 2022-07-01 10:10:11
  * @LastEditors: rendc
- * @LastEditTime: 2022-07-04 09:35:36
+ * @LastEditTime: 2022-07-06 11:55:38
 -->
 <template>
   <div class="about">
@@ -18,7 +18,7 @@
           src="https://img.youpin.mi-img.com/shopcenter/7dhur6i77hg_11350267611625208274363.png"
         />
       </div>
-      <div class="middle"> 请登录</div>
+      <div class="middle"> {{user?user:"请登录"}}</div>
       <div class="right">
         <van-icon
           name="arrow"
@@ -192,63 +192,95 @@
           </template>
         </van-cell>
       </van-cell-group>
+      <div class="mySpace"></div>
+      <van-cell-group>
+        <van-cell
+          center
+          is-link
+          @click="logout()"
+        >
+          <template #title>
+            <van-icon
+              class="myIcon myIcon38"
+              name="//cdn.cnbj1.fds.api.mi-img.com/mijia-m/production/yrn-buz-shop-center/res/images/ucenter/ucenter_icon_feedback.png"
+            />
+            <div class="
+              custom_title">退出登录
+            </div>
+          </template>
+        </van-cell>
+      </van-cell-group>
     </div>
   </div>
 </template>
 <script setup>
+import { useRouter } from "vue-router";
 // eslint-disable-next-line no-unused-vars
-import { Image, Dialog, Button, Cell, CellGroup, Col, Row } from "vant";
+import { Image, Dialog, Button, Cell, CellGroup, Col, Row, Toast } from "vant";
 import "vant/es/dialog/style";
+const router = useRouter();
 const openDialog = () => {
-  Dialog.confirm({
-    messageAlign: "left",
-    confirmButtonText: "同意",
-    confirmButtonColor: "rgb(132, 95, 63)",
-    cancelButtonText: "不同意",
-    cancelButtonColor: "rgb(153, 153, 153)",
-    message: () => (
-      <div class="jsxDiv">
-        <div class="title">声明与政策</div>
-        欢迎您来到小米有品！
-        <br />
-        您可在有品进行商品浏览、支付购买、售后服务等功能。我们将严格遵守相关法律法规和隐私政策以保护您的个人信息。请您阅读并同意
-        <a
-          class="lib10-secret-dialog-url"
-          href="https://m.xiaomiyoupin.com/content/ewen/pageFromId?id=1qctd9&amp;opapp=2&amp;noDL=1&amp;noPolicy=1"
-        >
-          《小米有品用户协议》
-        </a>
-        、
-        <a
-          class="lib10-secret-dialog-url"
-          href="https://m.xiaomiyoupin.com/content/ewen/pageFromId?id=jazizae6ehd0mtv6&amp;spmref=0.0.0.0.16310973661545810&amp;noPolicy=1"
-        >
-          《隐私政策》
-        </a>
-        、
-        <a
-          class="lib10-secret-dialog-url"
-          href="https://m.xiaomiyoupin.com/content/ewen/pageFromId?id=9ofwmkzlh29or2pk&amp;opapp=2&amp;noPolicy=1"
-        >
-          《小米账号使用协议》
-        </a>
-        和
-        <a
-          class="lib10-secret-dialog-url"
-          href="https://privacy.mi.com/miaccount/zh_CN/?noPolicy=1"
-        >
-          《小米账号隐私政策》
-        </a>
-        。
-      </div>
-    ),
-  })
-    .then(() => {
-      // on confirm
+  if (!user) {
+    Dialog.confirm({
+      messageAlign: "left",
+      confirmButtonText: "同意",
+      confirmButtonColor: "rgb(132, 95, 63)",
+      cancelButtonText: "不同意",
+      cancelButtonColor: "rgb(153, 153, 153)",
+      message: () => (
+        <div class="jsxDiv">
+          <div class="title">声明与政策</div>
+          欢迎您来到小米有品！
+          <br />
+          您可在有品进行商品浏览、支付购买、售后服务等功能。我们将严格遵守相关法律法规和隐私政策以保护您的个人信息。请您阅读并同意
+          <a
+            class="lib10-secret-dialog-url"
+            href="https://m.xiaomiyoupin.com/content/ewen/pageFromId?id=1qctd9&amp;opapp=2&amp;noDL=1&amp;noPolicy=1"
+          >
+            《小米有品用户协议》
+          </a>
+          、
+          <a
+            class="lib10-secret-dialog-url"
+            href="https://m.xiaomiyoupin.com/content/ewen/pageFromId?id=jazizae6ehd0mtv6&amp;spmref=0.0.0.0.16310973661545810&amp;noPolicy=1"
+          >
+            《隐私政策》
+          </a>
+          、
+          <a
+            class="lib10-secret-dialog-url"
+            href="https://m.xiaomiyoupin.com/content/ewen/pageFromId?id=9ofwmkzlh29or2pk&amp;opapp=2&amp;noPolicy=1"
+          >
+            《小米账号使用协议》
+          </a>
+          和
+          <a
+            class="lib10-secret-dialog-url"
+            href="https://privacy.mi.com/miaccount/zh_CN/?noPolicy=1"
+          >
+            《小米账号隐私政策》
+          </a>
+          。
+        </div>
+      ),
     })
-    .catch(() => {
-      // on cancel
-    });
+      .then(() => {
+        // 跳转登录页面
+        router.push("/login");
+      })
+      .catch(() => {
+        // on cancel
+      });
+  }
+  {
+    Toast("点击按钮");
+  }
+};
+const user = sessionStorage.getItem("user");
+const logout = () => {
+  delete sessionStorage.user;
+  location.reload();
+  // sessionStorage.removeItem("user")
 };
 </script>
 <style lang="less" scoped>

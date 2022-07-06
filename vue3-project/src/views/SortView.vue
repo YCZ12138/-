@@ -3,7 +3,7 @@
  * @Author: rendc
  * @Date: 2022-07-01 09:10:40
  * @LastEditors: rendc
- * @LastEditTime: 2022-07-05 09:38:23
+ * @LastEditTime: 2022-07-06 09:39:18
 -->
 <template>
   <div class="about">
@@ -277,7 +277,11 @@ const toTypePage = (index) => {
       height: 26.5px;
       line-height: 26.5px;
       border-radius: 13px;
-      background-color: rgb(230, 170, 92);
+      background: linear-gradient(
+        to right,
+        rgb(230, 170, 92),
+        rgb(208, 139, 48)
+      );
     }
   }
 }
