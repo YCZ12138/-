@@ -3,7 +3,7 @@
  * @Author: rendc
  * @Date: 2022-07-01 10:09:49
  * @LastEditors: rendc
- * @LastEditTime: 2022-07-06 11:50:09
+ * @LastEditTime: 2022-07-07 11:34:37
 -->
 <template>
   <div class="shoppingCart">
@@ -35,7 +35,7 @@
       >立即登录</van-button>
     </div>
     <div
-      v-if="user"
+      v-if="user && !cartData"
       class="notLogin"
     >
       <img
@@ -52,7 +52,54 @@
         size="small"
         @click="goBack()"
       >去首页逛逛</van-button>
+
     </div>
+    <van-card
+      class="myCard"
+      v-for="item in cartData"
+      :key="item.id"
+      :price="item.price"
+      thumb="https://img.youpin.mi-img.com/shopmain/a57241dc6a82565c92f1dc78bbc3a792.png@base@tag=imgScale&h=252&m=1&q=80&w=252"
+    >
+      <template #title>
+        <div class="myCardTitle">
+          {{item.name}}
+        </div>
+      </template>
+      <template #desc>
+        <van-row
+          class="myRowTop"
+          style="text-align:center;color:#333333;"
+        >
+          <van-col span="8"></van-col>
+          <van-col span="8"></van-col>
+          <van-col span="8">数量</van-col>
+        </van-row>
+        <van-row
+          class="myRowBottom"
+          style="text-align:center;color:#888888;"
+        >
+          <van-col span="8"></van-col>
+          <van-col span="8"></van-col>
+          <van-col span="8">{{item.number}}</van-col>
+
+        </van-row>
+      </template>
+      <!-- <template #bottom>
+        <div>
+          <van-tag
+            plain
+            type="primary"
+            size="medium"
+          >{{item.bottom[0]}}</van-tag>
+          <br>
+          <br>
+          <div style="color:#888888;">
+            {{item.bottom[1]}}条评论|{{item.bottom[2]}}%好评
+          </div>
+        </div>
+      </template> -->
+    </van-card>
     <div class="recommend">
       <div class="recommendTitle">
         <img
@@ -88,6 +135,7 @@
 </template>
 
 <script setup>
+import { ref } from "vue";
 import { useRouter } from "vue-router";
 const router = useRouter();
 const user = sessionStorage.getItem("user");
@@ -98,6 +146,7 @@ const goBack = () => {
 const toLogin = () => {
   router.push("/login");
 };
+const cartData = ref(JSON.parse(sessionStorage.getItem("shoppingCart")));
 const shoppingData = [
   {
     id: 1,

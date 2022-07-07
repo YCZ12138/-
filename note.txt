@@ -789,6 +789,10 @@
         https://swiperjs.com/swiper-api
         https://swiperjs.com/vue
     6. 点击返回按钮后 不在原来的页面了 怎么处理？
+
+    7. 商品详情页 加入购物车按钮颜色
+
+    8. 加入购物车的商品 如果是相同的 要合并
   3. 项目
   移动端项目
 

@@ -3,7 +3,7 @@
  * @Author: rendc
  * @Date: 2022-07-04 09:35:40
  * @LastEditors: rendc
- * @LastEditTime: 2022-07-06 12:01:08
+ * @LastEditTime: 2022-07-07 09:37:01
 -->
 <template>
   <div class="type">
@@ -121,7 +121,12 @@ const myCardData = [
 const toShoppingPage = (item) => {
   sessionStorage.setItem(
     "shoppingPage",
-    JSON.stringify({ id: item.id, name: item.title[1] })
+    JSON.stringify({
+      id: item.id,
+      name: item.title[1],
+      price: item.price,
+      originPrice: item.originPrice,
+    })
   );
   router.push({
     name: "shopping",
